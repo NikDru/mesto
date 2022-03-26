@@ -1,8 +1,21 @@
 .profile {
   margin: 40px auto 0;
   padding: 0;
-  width: 86%;
+  width: 88.125%;
   display: flex;
   align-items: center;
-  column-gap: 30px;
+  gap: 30px;
+}
+
+@media screen and (min-width: 1280px) {
+  .profile {
+    width: 68.75%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    flex-flow: column;
+
+  }
 }

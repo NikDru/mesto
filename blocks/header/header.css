@@ -4,7 +4,19 @@
   display: flex;
   align-items: flex-start;
   justify-items: flex-start;
-  width: 86%;
+  width: 90%;
   height: 74px;
   border-bottom: 1px solid #545454;
+}
+
+@media screen and (min-width: 1280px) {
+  .header {
+    width: 68.75%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header {
+    width: 100%;
+  }
 }

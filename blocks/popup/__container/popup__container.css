@@ -1,0 +1,9 @@
+.popup__container {
+  margin: 0 auto;
+  padding: 35px 0;
+  width: 83.25%;
+  display: flex;
+  flex-flow: column;
+  color: #1c1c1c;
+
+}
