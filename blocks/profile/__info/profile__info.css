@@ -3,3 +3,9 @@
   flex-flow: column;
   row-gap: 16px;
 }
+
+@media screen and (max-width: 425px) {
+  .profile__info {
+    align-items: center;
+  }
+}

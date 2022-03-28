@@ -3,3 +3,10 @@
   align-items: baseline;
   column-gap: 18px;
 }
+
+@media screen and (max-width: 425px) {
+  .profile__wrapper {
+    column-gap: 10px;
+  }
+}
+
