@@ -1,6 +1,6 @@
 .profile__wrapper {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   column-gap: 18px;
 }
 
