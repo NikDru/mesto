@@ -1,0 +1,12 @@
+.card__name {
+  margin: 0;
+  padding: 0;
+  color: #1c1c1c;
+  max-width: 84%;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

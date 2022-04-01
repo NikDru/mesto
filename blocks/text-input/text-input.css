@@ -1,0 +1,14 @@
+.text-input {
+  border: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 1.21;
+  font-family: inherit;
+}
+
+.text-input:focus {
+  outline: none;
+  border: 3px solid #4285f4;
+}

@@ -11,96 +11,84 @@
 <body>
   <div class="page">
     <header class="header">
-      <img class="header__logo" src="images/logo-image.svg" alt="Место">
+      <a href="#" class="header__link button-animation"><img class="header__logo" src="images/logo-image.svg" alt="Место"></a>
     </header>
     <main>
       <section class="profile">
-        <img class="profile__avatar" src="images/profile-avatar.jpg" alt="Аватар пользователя">
+        <div class="profile__avatar" >
+          <img class="profile__avatar-image" src="images/profile-avatar.jpg" alt="Аватар пользователя">
+        </div>
         <div class="profile__info">
           <div class="profile__wrapper">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button button-animation">
-              <img class="profile__edit-button-image" src="images/edit-button.svg" alt="Ручка">
-            </button>
+            <button type="button" class="profile__edit-button button-animation" aria-label="Edit"></button>
           </div>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button class="profile__add-button button-animation">
-          <img class="profile__add-button-image" src="images/add-button.svg" alt="Плюс">
-        </button>
+        <button type="button" class="profile__add-button button-animation" aria-label="Add"></button>
       </section>
       <section class="elements">
-        <article class="elements__element">
-          <img class="elements__image" src="images/osetia.jpg" alt="Горы Северной Осетии">
-          <div class="elements__sign">
-            <h2 class="elements__name">Северная Осетия</h2>
-            <button class="elements__like-button button-animation">
-              <img src="images/like-button.svg" alt="Сердце">
-            </button>
+        <article class="card">
+          <img class="card__image" src="images/osetia.jpg" alt="Горы Северной Осетии">
+          <div class="card__sign">
+            <h2 class="card__name">Северная Осетия</h2>
+            <button type="button" class="card__like-button button-animation" aria-label="Like"></button>
           </div>
         </article>
-        <article class="elements__element">
-          <img class="elements__image" src="images/elbrus.jpg" alt="Эльбрус">
-          <div class="elements__sign">
-            <h2 class="elements__name">Гора Эльбрус</h2>
-            <button class="elements__like-button button-animation">
-              <img src="images/like-button.svg" alt="Сердце">
-            </button>
+        <article class="card">
+          <img class="card__image" src="images/elbrus.jpg" alt="Эльбрус">
+          <div class="card__sign">
+            <h2 class="card__name">Гора Эльбрус</h2>
+            <button type="button" class="card__like-button button-animation" aria-label="Like"></button>
           </div>
         </article>
-        <article class="elements__element">
-          <img class="elements__image" src="images/dombay.jpg" alt="Домбай">
-          <div class="elements__sign">
-            <h2 class="elements__name">Домбай</h2>
-            <button class="elements__like-button button-animation">
-              <img src="images/like-button.svg" alt="Сердце">
-            </button>
+        <article class="card">
+          <img class="card__image" src="images/dombay.jpg" alt="Домбай">
+          <div class="card__sign">
+            <h2 class="card__name">Домбай</h2>
+            <button type="button" class="card__like-button button-animation" aria-label="Like"></button>
           </div>
         </article>
-        <article class="elements__element">
-          <img class="elements__image" src="images/moscow.jpg" alt="Москва">
-          <div class="elements__sign">
-            <h2 class="elements__name">Москва</h2>
-            <button class="elements__like-button button-animation">
-              <img src="images/like-button.svg" alt="Сердце">
-            </button>
+        <article class="card">
+          <img class="card__image" src="images/moscow.jpg" alt="Москва">
+          <div class="card__sign">
+            <h2 class="card__name">Москва</h2>
+            <button type="button" class="card__like-button button-animation" aria-label="Like"></button>
           </div>
         </article>
-        <article class="elements__element">
-          <img class="elements__image" src="images/baikal.jpg" alt="Байкал">
-          <div class="elements__sign">
-            <h2 class="elements__name">Байкал</h2>
-            <button class="elements__like-button button-animation">
-              <img src="images/like-button.svg" alt="Сердце">
-            </button>
+        <article class="card">
+          <img class="card__image" src="images/rocks.jpg" alt="Байкал">
+          <div class="card__sign">
+            <h2 class="card__name">Байкал</h2>
+            <button type="button" class="card__like-button button-animation" aria-label="Like"></button>
           </div>
         </article>
-        <article class="elements__element">
-          <img class="elements__image" src="images/karachaevo-cherkesiya.jpg" alt="Карачаево-Черкессия">
-          <div class="elements__sign">
-            <h2 class="elements__name">Карачаево-Черкессия</h2>
-            <button class="elements__like-button button-animation">
-              <img src="images/like-button.svg" alt="Сердце">
-            </button>
+        <article class="card">
+          <img class="card__image" src="images/karachaevo-cherkesiya.jpg" alt="Карачаево-Черкессия">
+          <div class="card__sign">
+            <h2 class="card__name">Карачаево-Черкессия</h2>
+            <button type="button" class="card__like-button button-animation" aria-label="Like"></button>
           </div>
         </article>
       </section>
       <div class="popup">
         <div class="popup__container">
-          <button class="popup__close-button button-animation">
-            <img class="popup__close-button-image" src="images/close-button.svg" alt="Крестик">
-          </button>
-          <form class="popup__form">
+          <button type="button" class="popup__close-button button-animation" aria-label="Close"></button>
+          <form class="popup__form" action="#" name="profile-form">
             <h2 class="popup__header">Редактировать профиль</h2>
-            <input class="popup__text-input popup__text-input_type_name " type="text">
-            <input class="popup__text-input popup__text-input_type_about" type="text">
+            <input class="text-input popup__input-name" type="text" name="input-name">
+            <input class="text-input popup__input-about" type="text" name="input-about">
             <input class="popup__save-button button-animation" type="submit" value="Сохранить">
           </form>
         </div>
       </div>
     </main>
     <footer class="footer">
-      <h2 class="footer__header">&copy; 2020 Mesto Russia</h2>
+      <!-- К сожалению, я не до конца понял суть данного предложения по исправлению
+      Если провести сравнение с предыдущими работами, то чаще всего этот элемент является именно <p>
+      и тогда суть вопроса ясна =) Хотя если предположить, что Mesto должно быть заголовком,
+      а 2020 и Russia - параграфами, то это тоже выглядит логично (наверно)).-->
+      <p class="footer__header">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
   <script src="scripts/script.js"></script>

@@ -1,11 +1,10 @@
 .header {
   margin: 0 auto;
-  padding: 45px 0 0;
+  padding: 45px 0 41px;
   display: flex;
   align-items: flex-start;
   justify-items: flex-start;
   width: 90%;
-  height: 74px;
   border-bottom: 1px solid #545454;
 }
 
@@ -17,7 +16,7 @@
 
 @media screen and (max-width: 425px) {
   .header {
-    height: 56px;
+    padding: 28px 0 31.6px;
     width: 100%;
   }
 }

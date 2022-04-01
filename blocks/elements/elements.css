@@ -4,7 +4,8 @@
   width: 88.125%;
   display: grid;
   grid-template-columns: repeat(auto-fit, 282px);
-  gap: 17px;
+  column-gap: 17px;
+  row-gap: 20px;
 }
 
 @media screen and (min-width: 1280px) {
@@ -13,8 +14,8 @@
   }
 }
 
-@media screen and (max-width: 659px) {
+@media screen and (max-width: 425px) {
   .elements {
-    grid-template-columns: repeat(auto-fit, minmax(282px, 400px));
+    margin: 36px auto 0;
   }
 }

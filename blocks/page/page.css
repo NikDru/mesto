@@ -1,4 +1,7 @@
 .page {
+  margin: 0 auto;
+  max-width: 1280px;
+  align-items: center;
   position: relative;
   background-color: #000;
   color: #FFF;
