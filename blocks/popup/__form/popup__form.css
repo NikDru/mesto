@@ -4,5 +4,12 @@
   width: 83.25%;
   display: flex;
   flex-flow: column;
-  color: #1c1c1c;
+  color: #000;
+}
+
+@media screen and (max-width: 500px) {
+  .popup__form {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
 }

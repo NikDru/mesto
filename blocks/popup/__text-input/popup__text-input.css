@@ -1,0 +1,28 @@
+.popup__text-input {
+  margin: 30px auto 0;
+  width: 100%;
+  min-height: 30px;
+  border: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 1.21;
+  font-family: inherit;
+}
+
+.popup__text-input:first-of-type {
+  margin-top: 54px;
+}
+
+.popup__text-input:focus {
+  outline: none;
+  border-color: #4285f4;
+  border-width: 3px;
+}
+
+@media screen and (max-width: 500px) {
+  .popup__text-input:first-of-type {
+    margin-top: 75px;
+  }
+}

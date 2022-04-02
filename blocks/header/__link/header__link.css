@@ -1,6 +1,12 @@
 .header__link {
   width: 143px;
   height: 33px;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.header__link:hover {
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 425px) {

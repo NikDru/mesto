@@ -11,6 +11,12 @@
   background-color: transparent;
   background-image: url(../../../images/close-button.svg);
   background-size: contain;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.popup__close-button:hover {
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 550px) {
