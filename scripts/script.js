@@ -6,8 +6,42 @@ let popupNameInput = document.querySelector('.popup__text-input_type_name');
 let popupAboutInput = document.querySelector('.popup__text-input_type_about');
 let profileName = document.querySelector('.profile__name');
 let profileAbout = document.querySelector('.profile__about');
+let elements = document.querySelector('.elements');
 
-/* Смотри комментарий внизу
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+function addCard(name, link) {
+  const cardTemplate = document.querySelector('#cardTemplate').content;
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  cardElement.querySelector('.card__image').src = link;
+  cardElement.querySelector('.card__name').textContent = name;
+  elements.append(cardElement);
+}
 
 function stopScroll(evt) {
   evt.preventDefault();
@@ -25,7 +59,7 @@ function deleteStopScrollEvent() {
   popup.removeEventListener("mousewheel", stopScroll);
   popup.removeEventListener("wheel", stopScroll);
   popup.removeEventListener("touchmove", stopScroll);
-} */
+}
 
 function fillPopupForm() {
   popupNameInput.value = profileName.textContent;
@@ -54,8 +88,8 @@ formElement.addEventListener("submit", formSubmitHandler);
 editButton.addEventListener("click", openPopup);
 closeButton.addEventListener("click", closePopup);
 
-/* Скролл удален, идея была не в полной блокировки скролла и прокрутки,
-а включении блокировки при открытии поп-апа, потому что насколько я понимаю
-UI - очень неприятно открыть окошко и случайно отмотать страницу вниз.
-Просто реализация подкачала =) Правильно было добавлять обработчики при открытии popup
-и удалять при его закрытии */
+initialCards.forEach(item => addCard(item.name, item.link));
+
+/* Скролл удален, идея заключается в включении блокировки при открытии поп-апа,
+потому что насколько я понимаю UI - очень неприятно открыть окошко и случайно
+отмотать страницу вниз. */
