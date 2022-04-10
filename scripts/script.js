@@ -1,12 +1,21 @@
-let editButton = document.querySelector('.profile__edit-button');
-let closeButton = document.querySelector('.popup__close-button');
-let formElement = document.querySelector('.popup__form');
-let popup = document.querySelector('.popup');
-let popupNameInput = document.querySelector('.popup__text-input_type_name');
-let popupAboutInput = document.querySelector('.popup__text-input_type_about');
-let profileName = document.querySelector('.profile__name');
-let profileAbout = document.querySelector('.profile__about');
-let elements = document.querySelector('.elements');
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
+
+const popupEditProfile = document.querySelector('.popup_type_edit-profile');
+const popupEditProfileCloseButton = document.querySelector('.popup__close-button_type_edit-profile');
+const popupEditProfileFormElement = document.querySelector('.popup__form_type_edit-profile');
+const popupEditProfileNameInput = document.querySelector('.popup__text-input_type_name');
+const popupEditProfileAboutInput = document.querySelector('.popup__text-input_type_about');
+
+const popupAddCard = document.querySelector('.popup_type_add-card');
+const popupAddCardCloseButton = document.querySelector('.popup__close-button_type_add-card');
+const popupAddCardFormElement = document.querySelector('.popup__form_type_add-card');
+const popupAddCardNameInput = document.querySelector('.popup__text-input_type_card-name');
+const popupAddCardLinkInput = document.querySelector('.popup__text-input_type_card-link');
+
+const profileName = document.querySelector('.profile__name');
+const profileAbout = document.querySelector('.profile__about');
+const elements = document.querySelector('.elements');
 
 const initialCards = [
   {
@@ -35,61 +44,62 @@ const initialCards = [
   }
 ];
 
-function addCard(name, link) {
-  const cardTemplate = document.querySelector('#cardTemplate').content;
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+function createCard(name, link) {
+  const template = document.querySelector('.template-block').content;
+  const cardElement = template.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__image').src = link;
   cardElement.querySelector('.card__name').textContent = name;
-  elements.append(cardElement);
+  const trashButton = cardElement.querySelector('.card__trash-button');
+  trashButton.addEventListener("click", function () {
+    trashButton.closest('.card').remove();
+  });
+
+  const likeButton = cardElement.querySelector('.card__like-button');
+  likeButton.addEventListener("click", function () {
+    likeButton.classList.toggle('card__like-button_type_active');
+  });
+
+
+  elements.prepend(cardElement);
+
 }
 
-function stopScroll(evt) {
-  evt.preventDefault();
-}
-
-function addStopScrollEvent() {
-  popup.addEventListener("scroll", stopScroll);
-  popup.addEventListener("mousewheel", stopScroll);
-  popup.addEventListener("wheel", stopScroll);
-  popup.addEventListener("touchmove", stopScroll);
-}
-
-function deleteStopScrollEvent() {
-  popup.removeEventListener("scroll", stopScroll);
-  popup.removeEventListener("mousewheel", stopScroll);
-  popup.removeEventListener("wheel", stopScroll);
-  popup.removeEventListener("touchmove", stopScroll);
-}
-
-function fillPopupForm() {
-  popupNameInput.value = profileName.textContent;
-  popupAboutInput.value = profileAbout.textContent;
-}
-
-function openPopup() {
-  fillPopupForm();
+function openPopup(popup) {
+  if (popup.classList.contains('popup_type_edit-profile') > -1) {
+    fillPopupEditProfileForm();
+  }
   popup.classList.add('popup_opened');
-/*   addStopScrollEvent(); */
 }
 
-function closePopup() {
-/*   deleteStopScrollEvent(); */
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-function formSubmitHandler (evt) {
+function editProfileFormSubmitHandler(evt) {
   evt.preventDefault();
-  profileName.textContent = popupNameInput.value;
-  profileAbout.textContent = popupAboutInput.value;
-  closePopup();
+  profileName.textContent = popupEditProfileNameInput.value;
+  profileAbout.textContent = popupEditProfileAboutInput.value;
+  closePopup(popupEditProfile);
 }
 
-formElement.addEventListener("submit", formSubmitHandler);
-editButton.addEventListener("click", openPopup);
-closeButton.addEventListener("click", closePopup);
+function fillPopupEditProfileForm() {
+  popupEditProfileNameInput.value = profileName.textContent;
+  popupEditProfileAboutInput.value = profileAbout.textContent;
+}
 
-initialCards.forEach(item => addCard(item.name, item.link));
+function addCardSubmitHandler(evt) {
+  evt.preventDefault();
+  createCard(popupAddCardNameInput.value, popupAddCardLinkInput.value);
+  closePopup(popupAddCard);
+}
 
-/* Скролл удален, идея заключается в включении блокировки при открытии поп-апа,
-потому что насколько я понимаю UI - очень неприятно открыть окошко и случайно
-отмотать страницу вниз. */
+editButton.addEventListener("click", e => openPopup(popupEditProfile));
+addButton.addEventListener("click", e => openPopup(popupAddCard));
+
+popupEditProfileFormElement.addEventListener("submit", editProfileFormSubmitHandler)
+popupAddCardFormElement.addEventListener("submit", addCardSubmitHandler);
+
+popupEditProfileCloseButton.addEventListener("click", e => closePopup(popupEditProfile));
+popupAddCardCloseButton.addEventListener("click", e => closePopup(popupAddCard));
+
+initialCards.forEach(item => createCard(item.name, item.link));
