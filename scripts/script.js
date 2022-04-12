@@ -55,6 +55,7 @@ function createCard(name, link) {
   const cardElement = template.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   cardImage.src = link;
+  cardImage.alt = name;
   cardImage.addEventListener('click', e => openPopup(popupImage, e))
   cardElement.querySelector('.card__name').textContent = name;
   const trashButton = cardElement.querySelector('.card__trash-button');
@@ -106,6 +107,7 @@ function fillPopupEditProfileForm() {
 function fillPopupImage(cardHeader, cardLink) {
   popupImageHeader.textContent = cardHeader
   popupImageForm.src = cardLink;
+  popupImageForm.alt = cardHeader;
 }
 
 function addCardSubmitHandler(evt) {

@@ -2,15 +2,21 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  bottom: -22px;
+  bottom: -25px;
   max-width: 291px;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 500px) {
   .popup__image-header {
     max-width: 240px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
