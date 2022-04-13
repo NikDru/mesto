@@ -32,8 +32,8 @@
           <button type="button" class="popup__close-button popup__close-button_type_edit-profile" aria-label="Close"></button>
           <form class="popup__form popup__form_type_edit-profile" action="#" name="profile-form">
             <h2 class="popup__header">Редактировать профиль</h2>
-            <input class="popup__text-input popup__text-input_type_name" type="text" name="input-name">
-            <input class="popup__text-input popup__text-input_type_about" type="text" name="input-about">
+            <input class="popup__text-input popup__text-input_type_name" placeholder="Имя" type="text" name="input-name">
+            <input class="popup__text-input popup__text-input_type_about" placeholder="Описание" type="text" name="input-about">
             <input class="popup__save-button" type="submit" value="Сохранить">
           </form>
         </div>
@@ -41,10 +41,10 @@
       <div class="popup popup_type_add-card">
         <div class="popup__container">
           <button type="button" class="popup__close-button popup__close-button_type_add-card" aria-label="Close"></button>
-          <form class="popup__form popup__form_type_add-card" action="#" name="profile-form">
+          <form class="popup__form popup__form_type_add-card" action="#" name="add-card-form">
             <h2 class="popup__header">Новое место</h2>
-            <input class="popup__text-input popup__text-input_type_card-name" placeholder="Название" type="text">
-            <input class="popup__text-input popup__text-input_type_card-link" placeholder="Ссылка на картинку" type="text">
+            <input class="popup__text-input popup__text-input_type_card-name" placeholder="Название" type="text" name="input-card-name">
+            <input class="popup__text-input popup__text-input_type_card-link" placeholder="Ссылка на картинку" type="text" name="input-card-link">
             <input class="popup__save-button" type="submit" value="Сохранить">
           </form>
         </div>
@@ -73,6 +73,9 @@
   </template>
   <template id="popupTemplate">
   </template>
+  <script src="scripts/cards.js"></script>
+  <script src="scripts/elements.js"></script>
+  <script src="scripts/functions.js"></script>
   <script src="scripts/script.js"></script>
 </body>
 </html>
