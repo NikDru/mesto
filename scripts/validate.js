@@ -20,10 +20,10 @@ function setEventListeners(formElement, params) {
 function isValid(formElement, inputElement, params) {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, params);
-    checkForm(formElement, params);
+    toggleSaveButton(formElement, params);
   } else {
     hideInputError(formElement, inputElement, params);
-    checkForm(formElement, params);
+    toggleSaveButton(formElement, params);
   }
 }
 
@@ -51,12 +51,9 @@ function deactivateButton(formElement, params) {
   button.setAttribute('disabled', 'disabled');
 }
 
-const checkForm = (formElement, params) => {
-  if (!checkForm.inputListValidity) {
-    checkForm.inputListValidity = {};
-  }
-  Array.from(formElement.querySelectorAll(params.inputSelector)).map(x => checkForm.inputListValidity[x.id] = x.validity.valid);
-  if (Object.values(checkForm.inputListValidity).every(x => x)) {
+function toggleSaveButton(formElement, params) {
+  let inputsValidity = Array.from(formElement.querySelectorAll(params.inputSelector)).map(x => x.validity.valid);
+  if (Object.values(inputsValidity).every(x => x)) {
     activateButton(formElement, params);
   }
   else {

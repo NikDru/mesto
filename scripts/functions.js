@@ -21,6 +21,17 @@ function renderCard(card, container) {
   container.prepend(card);
 }
 
+function setClosePopupByEscape(event) {
+  if (event.key === 'Escape')  {
+    closePopup(openedPopup);
+    document.removeEventListener('keydown', setClosePopupByEscape);
+  }
+}
+
+function setEscapeHandler() {
+  document.addEventListener('keydown', setClosePopupByEscape);
+}
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   openedPopup = popup;
@@ -28,7 +39,6 @@ function openPopup(popup) {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  checkForm(popup, params);
 }
 
 function createImagePopup(popup, e) {
@@ -43,9 +53,29 @@ function fillPopupImage(e) {
   popupImageHeader.textContent = card.querySelector('.card__name').textContent;
 }
 
-function createEditProfilePopup(popup, e) {
+function setPopupState(popup, params) {
+  clearPopupErrors(popup, params);
+  toggleSaveButton(popup, params);
+  setEscapeHandler();
+}
+
+function clearPopupErrors(popup, params) {
+  const inputList = Array.from(popup.querySelectorAll(params.inputSelector));
+  inputList.forEach((inputElement) => {
+      hideInputError(popup, inputElement, params);
+  });
+}
+
+function createEditProfilePopup(popup, params, e) {
   popupEditProfileNameInput.value = profileName.textContent;
   popupEditProfileAboutInput.value = profileAbout.textContent;
+  setPopupState(popup, params);
+  openPopup(popup);
+}
+
+function createAddCardPopup(popup, params, e) {
+  clearAddCardPopup();
+  setPopupState(popup, params);
   openPopup(popup);
 }
 
@@ -66,7 +96,6 @@ function addCardSubmitHandler(evt) {
 
 function closeAddCardPopup(popup) {
   closePopup(popup);
-  clearAddCardPopup();
 }
 
 function clearAddCardPopup() {
