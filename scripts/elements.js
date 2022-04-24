@@ -24,3 +24,5 @@ const profileAbout = document.querySelector('.profile__about');
 const elements = document.querySelector('.elements');
 
 const template = document.querySelector('.template-block').content;
+
+let openedPopup;

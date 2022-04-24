@@ -23,10 +23,12 @@ function renderCard(card, container) {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  openedPopup = popup;
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  checkForm(popup, params);
 }
 
 function createImagePopup(popup, e) {
