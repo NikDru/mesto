@@ -1,7 +1,7 @@
-editButton.addEventListener("click", e => createEditProfilePopup(popupEditProfile, params, e));
+editButton.addEventListener("click", e => createEditProfilePopup(popupEditProfile));
 popupEditProfileFormElement.addEventListener("submit", editProfileFormSubmitHandler);
 
-addButton.addEventListener("click", e => createAddCardPopup(popupAddCard, params, e));
+addButton.addEventListener("click",  e => createAddCardPopup(popupAddCard));
 popupAddCardFormElement.addEventListener("submit", addCardSubmitHandler);
 
 popupEditProfileCloseButton.addEventListener("click", e => closePopup(popupEditProfile));
@@ -13,7 +13,7 @@ initialCards.forEach(item =>  {
   renderCard(card, elements);
 });
 
-let popups = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 popups.forEach(popup => {
   popup.addEventListener('click', evt => {
     if (evt.target.classList.contains('popup')) {

@@ -24,8 +24,11 @@ function renderCard(card, container) {
 function setClosePopupByEscape(event) {
   if (event.key === 'Escape')  {
     closePopup(openedPopup);
-    document.removeEventListener('keydown', setClosePopupByEscape);
   }
+}
+
+function deleteEscapeHandler() {
+  document.removeEventListener('keydown', setClosePopupByEscape);
 }
 
 function setEscapeHandler() {
@@ -35,10 +38,13 @@ function setEscapeHandler() {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   openedPopup = popup;
+  setEscapeHandler();
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  deleteEscapeHandler();
+  openedPopup = popup;
 }
 
 function createImagePopup(popup, e) {
@@ -53,27 +59,26 @@ function fillPopupImage(e) {
   popupImageHeader.textContent = card.querySelector('.card__name').textContent;
 }
 
-function setPopupState(popup, params) {
-  clearPopupErrors(popup, params);
+function setPopupState(popup) {
+  clearPopupErrors(popup);
   toggleSaveButton(popup, params);
-  setEscapeHandler();
 }
 
-function clearPopupErrors(popup, params) {
+function clearPopupErrors(popup) {
   const inputList = Array.from(popup.querySelectorAll(params.inputSelector));
   inputList.forEach((inputElement) => {
       hideInputError(popup, inputElement, params);
   });
 }
 
-function createEditProfilePopup(popup, params, e) {
+function createEditProfilePopup(popup) {
   popupEditProfileNameInput.value = profileName.textContent;
   popupEditProfileAboutInput.value = profileAbout.textContent;
   setPopupState(popup, params);
   openPopup(popup);
 }
 
-function createAddCardPopup(popup, params, e) {
+function createAddCardPopup(popup) {
   clearAddCardPopup();
   setPopupState(popup, params);
   openPopup(popup);
