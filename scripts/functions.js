@@ -1,22 +1,3 @@
-function createCard(name, link) {
-  const cardElement = template.querySelector('.card').cloneNode(true);
-  const cardImage = cardElement.querySelector('.card__image');
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardImage.addEventListener('click', e => createImagePopup(popupImage, e))
-  cardElement.querySelector('.card__name').textContent = name;
-  const trashButton = cardElement.querySelector('.card__trash-button');
-  trashButton.addEventListener("click", function () {
-    trashButton.closest('.card').remove();
-  });
-
-  const likeButton = cardElement.querySelector('.card__like-button');
-  likeButton.addEventListener("click", function () {
-    likeButton.classList.toggle('card__like-button_type_active');
-  });
-  return cardElement;
-}
-
 function renderCard(card, container) {
   container.prepend(card);
 }
