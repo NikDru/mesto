@@ -24,11 +24,10 @@ export default class FormValidator {
   _isValid(inputElement) {
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement);
-      this._toggleSaveButton();
     } else {
       this._hideInputError(inputElement);
-      this._toggleSaveButton();
     }
+    this._toggleSaveButton();
   }
 
   _showInputError(inputElement) {
@@ -54,13 +53,17 @@ export default class FormValidator {
   }
 
   _toggleSaveButton() {
-    let inputsValidity = this._inputElements
-    .map((x) => x.validity.valid);
-    if (Object.values(inputsValidity).every((x) => x)) {
+    if (this._validatedForm.checkValidity()) {
       this._activateButton();
     } else {
       this._deactivateButton();
     }
+  }
+
+  _clearErrors() {
+    this._inputElements.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
   }
 
   enableValidation() {
@@ -68,5 +71,10 @@ export default class FormValidator {
       evt.preventDefault();
     });
     this._setEventListeners();
+  }
+
+  resetValidation() {
+    this._clearErrors();
+    this._toggleSaveButton();
   }
 }
