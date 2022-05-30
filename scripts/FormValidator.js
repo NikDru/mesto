@@ -9,9 +9,10 @@ export default class FormValidator {
     this._inputElements = Array.from(
       this._validatedForm.querySelectorAll(this._inputSelector)
     );
-    this._button = this._validatedForm.querySelector(this._submitButtonSelector);
+    this._button = this._validatedForm.querySelector(
+      this._submitButtonSelector
+    );
   }
-
 
   _setEventListeners() {
     this._inputElements.forEach((inputElement) => {
@@ -31,14 +32,18 @@ export default class FormValidator {
   }
 
   _showInputError(inputElement) {
-    const errorElement = this._validatedForm.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._validatedForm.querySelector(
+      `.${inputElement.id}-error`
+    );
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = inputElement.validationMessage;
     errorElement.classList.add(this._errorClass);
   }
 
   _hideInputError(inputElement) {
-    const errorElement = this._validatedForm.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._validatedForm.querySelector(
+      `.${inputElement.id}-error`
+    );
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     errorElement.textContent = "";

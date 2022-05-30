@@ -36,7 +36,7 @@ const params = {
   errorClass: "popup__text-input-error_type_active",
 };
 
-const formValidators = {}
+const formValidators = {};
 
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
@@ -74,7 +74,7 @@ const popups = document.querySelectorAll(".popup");
 
 function setClosePopupByEscape(event) {
   if (event.key === "Escape") {
-    const openedPopup = document.querySelector('.popup_opened');
+    const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 }
@@ -111,13 +111,13 @@ function fillPopupImage(name, link) {
 function createEditProfilePopup(popup) {
   popupEditProfileNameInput.value = profileName.textContent;
   popupEditProfileAboutInput.value = profileAbout.textContent;
-  formValidators['profile-form'].resetValidation();
+  formValidators["profile-form"].resetValidation();
   openPopup(popup);
 }
 
 function createAddCardPopup(popup) {
   clearForm(popupAddCardFormElement);
-  formValidators['add-card-form'].resetValidation();
+  formValidators["add-card-form"].resetValidation();
   openPopup(popup);
 }
 
@@ -146,8 +146,7 @@ function clearForm(form) {
 }
 
 function createCard(item, template) {
-  const cardElement = new Card(item, template)
-    .createCard();
+  const cardElement = new Card(item, template).createCard();
   return cardElement;
 }
 
@@ -156,10 +155,10 @@ function addCardToBody(card) {
 }
 
 const enableValidation = (params) => {
-  const formList = Array.from(document.querySelectorAll(params.formSelector))
+  const formList = Array.from(document.querySelectorAll(params.formSelector));
   formList.forEach((formElement) => {
-    const validator = new FormValidator(params, formElement)
-    const formName = formElement.getAttribute('name');
+    const validator = new FormValidator(params, formElement);
+    const formName = formElement.getAttribute("name");
     formValidators[formName] = validator;
     validator.enableValidation();
   });
@@ -173,15 +172,15 @@ const enableValidation = (params) => {
 // Вероятно, есть вариант, как сделать лучше (возможно комбинация методов),
 // однако я ее не нашел.
 popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup(popup);
     }
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup(popup)
+    if (evt.target.classList.contains("popup__close-button")) {
+      closePopup(popup);
     }
-  })
-})
+  });
+});
 
 initialCards.forEach((item) => {
   item.handleCardClick = handleCardClick;
