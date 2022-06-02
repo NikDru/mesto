@@ -1,5 +1,6 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Popup from "./Popup.js";
 
 const initialCards = [
   {
@@ -72,30 +73,30 @@ const profileAbout = document.querySelector(".profile__about");
 const elements = document.querySelector(".elements");
 const popups = document.querySelectorAll(".popup");
 
-function setClosePopupByEscape(event) {
-  if (event.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  }
-}
+// function setClosePopupByEscape(event) {
+//   if (event.key === "Escape") {
+//     const openedPopup = document.querySelector(".popup_opened");
+//     closePopup(openedPopup);
+//   }
+// }
 
-function deleteEscapeHandler() {
-  document.removeEventListener("keydown", setClosePopupByEscape);
-}
+// function deleteEscapeHandler() {
+//   document.removeEventListener("keydown", setClosePopupByEscape);
+// }
 
-function setEscapeHandler() {
-  document.addEventListener("keydown", setClosePopupByEscape);
-}
+// function setEscapeHandler() {
+//   document.addEventListener("keydown", setClosePopupByEscape);
+// }
 
-function openPopup(popup) {
-  popup.classList.add("popup_opened");
-  setEscapeHandler();
-}
+// function openPopup(popup) {
+//   popup.classList.add("popup_opened");
+//   setEscapeHandler();
+// }
 
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
-  deleteEscapeHandler();
-}
+// function closePopup(popup) {
+//   popup.classList.remove("popup_opened");
+//   deleteEscapeHandler();
+// }
 
 function handleCardClick(name, link) {
   fillPopupImage(name, link);
@@ -164,23 +165,16 @@ const enableValidation = (params) => {
   });
 };
 
-// Mousedown VS click - у меня была дилемма,
-// что использовать - mousedown закрывает только по клику на кнопке или оверлею,
-// но шанса отменить у пользователя нет
-// Click - можно закрыть случайно, вынеся курсор за оверлей,
-// но зато можно отменить закрытие, если перенести курсор внутрь оверлея =)
-// Вероятно, есть вариант, как сделать лучше (возможно комбинация методов),
-// однако я ее не нашел.
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains("popup__close-button")) {
-      closePopup(popup);
-    }
-  });
-});
+// popups.forEach((popup) => {
+//   popup.addEventListener("mousedown", (evt) => {
+//     if (evt.target.classList.contains("popup_opened")) {
+//       closePopup(popup);
+//     }
+//     if (evt.target.classList.contains("popup__close-button")) {
+//       closePopup(popup);
+//     }
+//   });
+// });
 
 initialCards.forEach((item) => {
   item.handleCardClick = handleCardClick;
@@ -197,9 +191,7 @@ popupEditProfileFormElement.addEventListener(
   "submit",
   handleEditProfileFormSubmit
 );
-addButton.addEventListener("click", (e) => createAddCardPopup(popupAddCard));
-popupAddCardFormElement.addEventListener("submit", handleAddCardSubmit);
 
-/// P.S. Огромное спасибо за комментарии по коду, информация об универсальных классах
-/// и их использовании очень полезна и не совсем очевидна, если не иметь большого опыта
-/// в разработке для front-end'a =)
+const popup = new Popup(".popup_type_add-card");
+addButton.addEventListener("click", (e) => popup.open());
+popupAddCardFormElement.addEventListener("submit", handleAddCardSubmit);
