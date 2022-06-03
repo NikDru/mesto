@@ -1,6 +1,7 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
-import Popup from "./Popup.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
 
 const initialCards = [
   {
@@ -28,6 +29,12 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+
+const popups = {
+    imagePopup: new PopupWithImage(".popup_type_image"),
+    addCardPopup: new PopupWithForm(".popup_type_add-card", handleAddCardSubmit, ".popup__form_type_add-card"),
+    editProfilePopup: new PopupWithForm(".popup_type_edit-profile", handleEditProfileFormSubmit, ".popup__form_type_edit-profile")
+  }
 
 const params = {
   formSelector: ".popup__form",
@@ -64,49 +71,12 @@ const popupAddCardLinkInput = document.querySelector(
   ".popup__text-input_type_card-link"
 );
 
-const popupImage = document.querySelector(".popup_type_image");
-const popupImageForm = document.querySelector(".popup__image");
-const popupImageHeader = document.querySelector(".popup__image-header");
-
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 const elements = document.querySelector(".elements");
-const popups = document.querySelectorAll(".popup");
-
-// function setClosePopupByEscape(event) {
-//   if (event.key === "Escape") {
-//     const openedPopup = document.querySelector(".popup_opened");
-//     closePopup(openedPopup);
-//   }
-// }
-
-// function deleteEscapeHandler() {
-//   document.removeEventListener("keydown", setClosePopupByEscape);
-// }
-
-// function setEscapeHandler() {
-//   document.addEventListener("keydown", setClosePopupByEscape);
-// }
-
-// function openPopup(popup) {
-//   popup.classList.add("popup_opened");
-//   setEscapeHandler();
-// }
-
-// function closePopup(popup) {
-//   popup.classList.remove("popup_opened");
-//   deleteEscapeHandler();
-// }
 
 function handleCardClick(name, link) {
-  fillPopupImage(name, link);
-  openPopup(popupImage);
-}
-
-function fillPopupImage(name, link) {
-  popupImageHeader.textContent = name;
-  popupImageForm.src = link;
-  popupImageForm.alt = name;
+  popups["imagePopup"].open(name, link);
 }
 
 function createEditProfilePopup(popup) {
@@ -122,24 +92,19 @@ function createAddCardPopup(popup) {
   openPopup(popup);
 }
 
-function handleEditProfileFormSubmit(evt) {
-  evt.preventDefault();
-  profileName.textContent = popupEditProfileNameInput.value;
-  profileAbout.textContent = popupEditProfileAboutInput.value;
-  closePopup(popupEditProfile);
+function handleEditProfileFormSubmit(inputName, inputExtra) {
+  profileName.textContent = inputName;
+  profileAbout.textContent = inputExtra;
 }
 
-function handleAddCardSubmit(evt) {
-  evt.preventDefault();
+function handleAddCardSubmit(inputName, inputExtra) {
   const item = {
-    name: popupAddCardNameInput.value,
-    link: popupAddCardLinkInput.value,
+    name: inputName,
+    link: inputExtra,
     handleCardClick: handleCardClick,
   };
   const cardElement = createCard(item, ".template-block");
   addCardToBody(cardElement);
-  closePopup(popupAddCard);
-  clearForm(evt.target);
 }
 
 function clearForm(form) {
@@ -192,6 +157,6 @@ popupEditProfileFormElement.addEventListener(
   handleEditProfileFormSubmit
 );
 
-const popup = new Popup(".popup_type_add-card");
-addButton.addEventListener("click", (e) => popup.open());
-popupAddCardFormElement.addEventListener("submit", handleAddCardSubmit);
+// const popup = new Popup(".popup_type_add-card");
+addButton.addEventListener("click", () => {popups["addCardPopup"].open()});
+//popupAddCardFormElement.addEventListener("submit", handleAddCardSubmit);
