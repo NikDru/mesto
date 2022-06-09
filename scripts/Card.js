@@ -3,6 +3,7 @@ export default class Card {
     this._name = card.name;
     this._link = card.link;
     this._handleCardClick = card.handleCardClick;
+    this._handleRemoveCard = card.handleRemoveCard;
     this._templateSelector = templateSelector;
   }
 
@@ -25,6 +26,7 @@ export default class Card {
 
   _handleTrashButtonClick() {
     this._trashButton.closest(".card").remove();
+    this._element = null;
   }
 
   _setEventListeners() {
