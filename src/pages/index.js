@@ -26,28 +26,30 @@ function handleAddCardSubmit(inputs) {
     name: inputs["input-card-name"],
     link: inputs["input-card-link"]
   };
-  cardSection.renderNewItem(item);
+  cardSection.setItem(createCard(item, ".template-block"));
 }
 
+function createCard(item, template) {
+  item.handleCardClick = handleCardClick;
+  const cardElement = new Card(item, template)
+    .createCard();
+  return cardElement;
+}
 const userInfo = new UserInfo(userInfoSelectors);
 
 const popups = {
-  imagePopup: new PopupWithImage(".popup_type_image"),
-  addCardPopup: new PopupWithForm(".popup_type_add-card", handleAddCardSubmit, ".popup__form", ".popup__text-input"),
-  editProfilePopup: new PopupWithForm(".popup_type_edit-profile", handleEditProfileFormSubmit, ".popup__form", ".popup__text-input")
+  imagePopup: new PopupWithImage(".popup_type_image", ".popup__image", ".popup__image-header"),
+  addCardPopup: new PopupWithForm(".popup_type_add-card", handleAddCardSubmit, ".popup__form_type_add-card", ".popup__text-input"),
+  editProfilePopup: new PopupWithForm(".popup_type_edit-profile", handleEditProfileFormSubmit, ".popup__form_type_edit-profile", ".popup__text-input")
 }
 
-const cardSection = new Section({
-    data: initialCards,
-    renderer: (item) => {
-      item.handleCardClick = handleCardClick;
-      const cardElement = new Card(item, ".template-block").createCard();
-      cardSection.setItem(cardElement);
-    }
-  },
-  ".elements"
-);
-cardSection.renderItems();
+const renderer = (item) => {
+  const cardElement = createCard(item, ".template-block");
+  cardSection.setItem(cardElement);
+};
+
+const cardSection = new Section(renderer, ".elements");
+cardSection.renderItems(initialCards);
 
 const formValidators = {};
 const enableValidation = (params) => {
@@ -62,18 +64,11 @@ const enableValidation = (params) => {
 enableValidation(params);
 
 editButton.addEventListener("click", () => {
-  popups["editProfilePopup"].open(true, (popup) => {
-    const values = userInfo.getUserInfo();
-    const inputList = popup.querySelectorAll(".popup__text-input");
-    inputList.forEach((input) => {
-      if (input.name === "input-name") {
-        input.value = values.userName;
-      }
-      else if (input.name === "input-about") {
-        input.value = values.userAbout;
-      }
-    });
-  });
+  const values = userInfo.getUserInfo();
+  const inputValues = {};
+  inputValues["input-name"] = values.userName;
+  inputValues["input-about"] = values.userAbout;
+  popups["editProfilePopup"].open(true, inputValues);
   formValidators["profile-form"].resetValidation();
 });
 
