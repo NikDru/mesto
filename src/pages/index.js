@@ -68,7 +68,8 @@ editButton.addEventListener("click", () => {
   const inputValues = {};
   inputValues["input-name"] = values.userName;
   inputValues["input-about"] = values.userAbout;
-  popups["editProfilePopup"].open(true, inputValues);
+  popups["editProfilePopup"].setInputValues(inputValues);
+  popups["editProfilePopup"].open();
   formValidators["profile-form"].resetValidation();
 });
 
