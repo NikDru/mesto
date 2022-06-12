@@ -1,10 +1,6 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    // Так как происходит потеря контекста (функция _handleEscClose)
-    // вызывается на элементе #document, необходимо привязать контекст
-    // и передать его функции, при этом сохранить функцию для
-    // последующего удаления в обработчике.
     this._bindedEscHandler = this._handleEscClose.bind(this);
     this._bindedMouseHandler = this._handleMouseDown.bind(this);
   }
@@ -35,7 +31,7 @@ export default class Popup {
     document.removeEventListener("keydown", this._bindedEscHandler);
   }
 
-  _setEventListeners() {
+  setEventListeners() {
     this._popup.addEventListener("mousedown", this._bindedMouseHandler);
   }
 }

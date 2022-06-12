@@ -42,6 +42,9 @@ const popups = {
   addCardPopup: new PopupWithForm(".popup_type_add-card", handleAddCardSubmit, ".popup__form_type_add-card", ".popup__text-input"),
   editProfilePopup: new PopupWithForm(".popup_type_edit-profile", handleEditProfileFormSubmit, ".popup__form_type_edit-profile", ".popup__text-input")
 }
+popups.imagePopup.setEventListeners();
+popups.addCardPopup.setEventListeners();
+popups.editProfilePopup.setEventListeners();
 
 const renderer = (item) => {
   const cardElement = createCard(item, ".template-block");

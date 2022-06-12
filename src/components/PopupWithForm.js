@@ -8,7 +8,6 @@ export default class PopupWithForm extends Popup {
     this._textInputSelector = textInputSelector;
     this._bindedSubmitHandler = this._handleSubmitEvent.bind(this);
     this._inputList = this._form.querySelectorAll(this._textInputSelector);
-    this._setEventListeners();
   }
 
   _getInputValues() {
@@ -25,8 +24,8 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  _setEventListeners() {
-    super._setEventListeners();
+  setEventListeners() {
+    super.setEventListeners();
     this._form.addEventListener('submit', this._bindedSubmitHandler);
   }
 
