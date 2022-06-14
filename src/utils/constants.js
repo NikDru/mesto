@@ -25,7 +25,7 @@ export const initialCards = [
   },
 ];
 
-export const userInfoSelectors = { userNameSelector: ".profile__name", userAboutSelector: ".profile__about"};
+export const userInfoSelectors = { userNameSelector: ".profile__name", userAboutSelector: ".profile__about", avatarImageSelector: ".profile__avatar"};
 
 export const params = {
   formSelector: ".popup__form",
@@ -36,5 +36,5 @@ export const params = {
 };
 
 export const editButton = document.querySelector(".profile__edit-button");
-
 export const addButton = document.querySelector(".profile__add-button");
+export const avatarButton = document.querySelector(".profile__avatar-button");
