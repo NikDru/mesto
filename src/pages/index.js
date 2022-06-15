@@ -11,13 +11,15 @@ import {
   params,
   editButton,
   addButton,
-  avatarButton
+  avatarButton/* ,
+  editProfilePopup,
+  addCardPopup,
+  changeAvatarPopup */
 } from "../utils/constants.js";
 
 let cardToDelete = null;
+let userID = "";
 
-
-/* https://avatarko.ru/img/kartinka/33/multfilm_lyagushka_32117.jpg */
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-43',
   headers: {
@@ -26,11 +28,11 @@ const api = new Api({
   }
 });
 
-function likeCard(cardID) {
+function handleLikeCard(cardID) {
   return api.likeCard(cardID);
 }
 
-function unlikeCard(cardID) {
+function handleUnlikeCard(cardID) {
   return api.unlikeCard(cardID);
 }
 
@@ -39,9 +41,8 @@ function handleCardClick(name, link) {
 }
 
 function handleEditProfileFormSubmit(inputs) {
-  api.editProfile({name: inputs["input-name"], about: inputs["input-about"]})
-    .then((res) => userInfo.setUserInfo(res))
-    .catch(e => console.log(`Ошибка обновления профиля, причина: ${e}`));
+  return api.editProfile({name: inputs["input-name"], about: inputs["input-about"]})
+    .then((res) => userInfo.setUserInfo(res));
 }
 
 function handleAddCardSubmit(inputs) {
@@ -49,11 +50,10 @@ function handleAddCardSubmit(inputs) {
     name: inputs["input-card-name"],
     link: inputs["input-card-link"]
   };
-  api.createNewCard(item)
+  return api.createNewCard(item)
     .then((res) => {
       cardSection.setItem(createCard(res, ".template-block", "c6a52c342c13d921985dc42e"));
-    })
-    .catch(e => console.log(`Ошибка создания карточки: ${e}`));
+    });
 }
 
 function handleTrashButtonClick(card) {
@@ -62,29 +62,28 @@ function handleTrashButtonClick(card) {
 }
 
 function handleDeleteCardFormSubmit() {
-  api.deleteCard(cardToDelete.cardID)
+  return api.deleteCard(cardToDelete.cardID)
     .then(res => {
       console.log(res);
       cardToDelete.deleteCard();
       cardToDelete = null;
     })
     .catch(e => {
-      console.log(`Ошибка обновления аватара, причина: ${e}`);
+      console.log(`Ошибка удаления карточки, причина: ${e}`);
       cardToDelete = null;
     }
   );
 }
 
 function handleChangeAvatarFormSubmit(inputs) {
-  api.changeAvatar({avatar: inputs["avatar-link"]})
-    .then((res) => {userInfo.setUserInfo(res);})
-    .catch(e => console.log(`Ошибка обновления аватара, причина: ${e}`));
+  return api.changeAvatar({avatar: inputs["avatar-link"]})
+    .then((res) => {userInfo.setUserInfo(res);});
 }
 
 function createCard(item, template, userId) {
   item.handleCardClick = handleCardClick;
-  item.likeCard = likeCard;
-  item.unlikeCard = unlikeCard;
+  item.likeCard = handleLikeCard;
+  item.unlikeCard = handleUnlikeCard;
   item.deleteCard = handleTrashButtonClick;
   const cardElement = new Card(item, template, userId)
     .createCard();
@@ -99,20 +98,24 @@ const popups = {
   deleteCardPopup: new PopupWithForm(".popup_type_delete-card", handleDeleteCardFormSubmit, ".popup__form_type_delete-card"),
   changeAvatarPopup: new PopupWithForm(".popup_type_change-avatar", handleChangeAvatarFormSubmit, ".popup__form_type_change-avatar", ".popup__text-input")
 }
-popups.imagePopup.setEventListeners();
-popups.addCardPopup.setEventListeners();
-popups.editProfilePopup.setEventListeners();
-popups.deleteCardPopup.setEventListeners();
-popups.changeAvatarPopup.setEventListeners();
+
+Object.keys(popups).forEach(popup => popups[popup].setEventListeners());
 
 const renderer = (item) => {
-  const cardElement = createCard(item, ".template-block", "c6a52c342c13d921985dc42e");
+  const cardElement = createCard(item, ".template-block", userID);
   cardSection.setItem(cardElement);
 };
 
 const cardSection = new Section(renderer, ".elements");
-api.getUserInfo().then((res) => { userInfo.setUserInfo(res); });
-api.getCards().then((res) => { cardSection.renderItems(res); });
+
+const promises = [api.getUserInfo(), api.getCards()];
+
+Promise.all(promises)
+  .then((res) =>{
+    userInfo.setUserInfo(res[0]);
+    userID = userInfo.getUserInfo().userId;
+    cardSection.renderItems(res[1]);
+  })
 
 const formValidators = {};
 const enableValidation = (params) => {
@@ -132,16 +135,16 @@ editButton.addEventListener("click", () => {
   inputValues["input-name"] = values.userName;
   inputValues["input-about"] = values.userAbout;
   popups["editProfilePopup"].setInputValues(inputValues);
-  popups["editProfilePopup"].open();
   formValidators["profile-form"].resetValidation();
+  popups["editProfilePopup"].open();
 });
 
 addButton.addEventListener("click", () => {
-  popups["addCardPopup"].open();
   formValidators["add-card-form"].resetValidation();
+  popups["addCardPopup"].open();
 });
 
 avatarButton.addEventListener("click", () => {
-  popups["changeAvatarPopup"].open();
   formValidators["change-avatar-form"].resetValidation();
+  popups["changeAvatarPopup"].open();
 })
