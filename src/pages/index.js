@@ -4,6 +4,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
 import {
@@ -11,13 +12,9 @@ import {
   params,
   editButton,
   addButton,
-  avatarButton/* ,
-  editProfilePopup,
-  addCardPopup,
-  changeAvatarPopup */
+  avatarButton
 } from "../utils/constants.js";
 
-let cardToDelete = null;
 let userID = "";
 
 const api = new Api({
@@ -57,20 +54,21 @@ function handleAddCardSubmit(inputs) {
 }
 
 function handleTrashButtonClick(card) {
+  popups["deleteCardPopup"].setSubmitAction(handleDeleteCardFormSubmit.bind(card));
   popups["deleteCardPopup"].open();
-  cardToDelete = card;
+  //cardToDelete = card;
 }
 
-function handleDeleteCardFormSubmit() {
-  return api.deleteCard(cardToDelete.cardID)
+function handleDeleteCardFormSubmit(evt) {
+  evt.preventDefault();
+  api.deleteCard(this.cardID)
     .then(res => {
       console.log(res);
-      cardToDelete.deleteCard();
-      cardToDelete = null;
+      this.deleteCard();
+      popups["deleteCardPopup"].close();
     })
     .catch(e => {
       console.log(`Ошибка удаления карточки, причина: ${e}`);
-      cardToDelete = null;
     }
   );
 }
@@ -95,7 +93,8 @@ const popups = {
   imagePopup: new PopupWithImage(".popup_type_image", ".popup__image", ".popup__image-header"),
   addCardPopup: new PopupWithForm(".popup_type_add-card", handleAddCardSubmit, ".popup__form_type_add-card", ".popup__text-input"),
   editProfilePopup: new PopupWithForm(".popup_type_edit-profile", handleEditProfileFormSubmit, ".popup__form_type_edit-profile", ".popup__text-input"),
-  deleteCardPopup: new PopupWithForm(".popup_type_delete-card", handleDeleteCardFormSubmit, ".popup__form_type_delete-card"),
+  //deleteCardPopup: new PopupWithForm(".popup_type_delete-card", handleDeleteCardFormSubmit, ".popup__form_type_delete-card"),
+  deleteCardPopup: new PopupWithConfirmation(".popup_type_delete-card", ".popup__form_type_delete-card"),
   changeAvatarPopup: new PopupWithForm(".popup_type_change-avatar", handleChangeAvatarFormSubmit, ".popup__form_type_change-avatar", ".popup__text-input")
 }
 
