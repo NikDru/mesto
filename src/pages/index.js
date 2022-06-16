@@ -16,6 +16,7 @@ import {
 } from "../utils/constants.js";
 
 let userID = "";
+let buttonText = "";
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-43',
@@ -24,6 +25,19 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+
+function toggleButtonWhileSave(saving, text) {
+  const button = document.querySelector(".popup_opened").querySelector(".popup__save-button");
+  if (saving) {
+    buttonText = button.value;
+    button.setAttribute("disabled", "disabled");
+    button.value = text;
+  }
+  else {
+    button.removeAttribute("disabled");
+    button.value = buttonText;
+  }
+}
 
 function handleLikeCard(cardID) {
   return api.likeCard(cardID);
@@ -38,29 +52,38 @@ function handleCardClick(name, link) {
 }
 
 function handleEditProfileFormSubmit(inputs) {
+  toggleButtonWhileSave(true, "Сохранение...");
   return api.editProfile({name: inputs["input-name"], about: inputs["input-about"]})
-    .then((res) => userInfo.setUserInfo(res));
+    .then((res) => userInfo.setUserInfo(res))
+    .finally(() => {
+      toggleButtonWhileSave(false);
+    });
 }
 
 function handleAddCardSubmit(inputs) {
+  toggleButtonWhileSave(true, "Сохранение...");
   const item = {
     name: inputs["input-card-name"],
     link: inputs["input-card-link"]
   };
+
   return api.createNewCard(item)
     .then((res) => {
-      cardSection.setItem(createCard(res, ".template-block", "c6a52c342c13d921985dc42e"));
+      cardSection.setItem(createCard(res, ".template-block", userID));
+    })
+    .finally(() => {
+      toggleButtonWhileSave(false);
     });
 }
 
 function handleTrashButtonClick(card) {
   popups["deleteCardPopup"].setSubmitAction(handleDeleteCardFormSubmit.bind(card));
   popups["deleteCardPopup"].open();
-  //cardToDelete = card;
 }
 
 function handleDeleteCardFormSubmit(evt) {
   evt.preventDefault();
+  toggleButtonWhileSave(true, "Удаление...");
   api.deleteCard(this.cardID)
     .then(res => {
       console.log(res);
@@ -68,14 +91,20 @@ function handleDeleteCardFormSubmit(evt) {
       popups["deleteCardPopup"].close();
     })
     .catch(e => {
-      console.log(`Ошибка удаления карточки, причина: ${e}`);
-    }
-  );
+      console.error(`Ошибка удаления карточки, причина: ${e}`);
+    })
+    .finally(() => {
+      toggleButtonWhileSave(false);
+    });
 }
 
 function handleChangeAvatarFormSubmit(inputs) {
+  toggleButtonWhileSave(true, "Сохранение...");
   return api.changeAvatar({avatar: inputs["avatar-link"]})
-    .then((res) => {userInfo.setUserInfo(res);});
+    .then((res) => {userInfo.setUserInfo(res);})
+    .finally(() => {
+      toggleButtonWhileSave(false);
+    });
 }
 
 function createCard(item, template, userId) {
@@ -93,7 +122,6 @@ const popups = {
   imagePopup: new PopupWithImage(".popup_type_image", ".popup__image", ".popup__image-header"),
   addCardPopup: new PopupWithForm(".popup_type_add-card", handleAddCardSubmit, ".popup__form_type_add-card", ".popup__text-input"),
   editProfilePopup: new PopupWithForm(".popup_type_edit-profile", handleEditProfileFormSubmit, ".popup__form_type_edit-profile", ".popup__text-input"),
-  //deleteCardPopup: new PopupWithForm(".popup_type_delete-card", handleDeleteCardFormSubmit, ".popup__form_type_delete-card"),
   deleteCardPopup: new PopupWithConfirmation(".popup_type_delete-card", ".popup__form_type_delete-card"),
   changeAvatarPopup: new PopupWithForm(".popup_type_change-avatar", handleChangeAvatarFormSubmit, ".popup__form_type_change-avatar", ".popup__text-input")
 }

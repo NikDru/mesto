@@ -33,61 +33,19 @@ export default class PopupWithForm extends Popup {
   }
 
   _handleSubmitEvent(evt) {
-    this._toggleButtonWhileSave(true);
+    //this._toggleButtonWhileSave(true);
     evt.preventDefault();
     this._handleSubmitCallback(this._getInputValues())
       .then(() => {
-        this._toggleButtonWhileSave(false);
         this.close();
       })
       .catch((e) => {
-        this._showError(e);
-        this._resetButtonText();
+        console.error(`Ошибка выполнения запроса: ${e}`);
       });
-  }
-
-
-  _toggleButtonWhileSave(saving) {
-    if (saving) {
-      this._saveButton.setAttribute("disabled", "disabled");
-      this._saveButton.value = "Сохранение...";
-    }
-    else {
-      this._resetButtonText();
-    }
-  }
-
-  _resetButtonText() {
-    this._saveButton.removeAttribute("disabled");
-    this._saveButton.value = this._buttonText;
-  }
-
-
-  _showError(error) {
-    this._inputErrorElement = this._form.querySelectorAll(".popup__text-input")[0];
-    const errorElement = this._form.querySelector(
-      `.${this._inputErrorElement.id}-error`
-    );
-    this._inputErrorElement.classList.add("popup__text-input_type_error");
-    errorElement.textContent = error;
-    errorElement.classList.add("popup__text-input-error_type_active");
-  }
-
-  _hideError() {
-    if (this._inputErrorElement !== undefined) {
-      const errorElement = this._form.querySelector(
-        `.${this._inputErrorElement.id}-error`
-      );
-      this._inputErrorElement.classList.remove("popup__text-input_type_error");
-      errorElement.textContent = "";
-      errorElement.classList.remove("popup__text-input-error_type_active");
-    }
   }
 
   close() {
     this._form.reset();
-    this._hideError();
-    this._resetButtonText();
     super.close();
   }
 }
