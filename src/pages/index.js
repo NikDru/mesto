@@ -17,6 +17,7 @@ import {
 
 let userID = "";
 let buttonText = "";
+let button;
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-43',
@@ -27,8 +28,8 @@ const api = new Api({
 });
 
 function toggleButtonWhileSave(saving, text) {
-  const button = document.querySelector(".popup_opened").querySelector(".popup__save-button");
   if (saving) {
+    button = document.querySelector(".popup_opened").querySelector(".popup__save-button");
     buttonText = button.value;
     button.setAttribute("disabled", "disabled");
     button.value = text;
@@ -36,6 +37,7 @@ function toggleButtonWhileSave(saving, text) {
   else {
     button.removeAttribute("disabled");
     button.value = buttonText;
+    button = null;
   }
 }
 
